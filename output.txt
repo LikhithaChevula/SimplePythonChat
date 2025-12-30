@@ -1,0 +1,62 @@
+Client types message → sends to server → server receives → server prints → server types reply → sends to client → client prints reply
+
+
+* Server must run first.
+* Client waits for server reply every time.
+* Typing exit stops the conversation.
+* Messages are line-by-line, no concurrency here.
+
+Step 1: Start the client
+Command:
+python client.py
+
+First thing you see:
+Message:
+
+This is from the line:
+client.send(input("Message:").encode('utf-8'))
+It waits for you to type something.
+The program pauses here until you enter text.
+
+Step 2: You type a message
+Example:
+Message: Hello
+
+What happens internally:
+The client sends "Hello" to the server.
+Server receives "Hello" and prints:
+Received: Hello
+Server asks you (on its terminal) to type a reply:
+Message:
+You type "Hi" on the server.
+Server sends "Hi" back to the client.
+
+Step 3: Client receives reply
+The client prints:
+Received from server: Hi
+
+From this line:
+print('Received from server:', msg)
+Shows exactly what server replied.
+
+Step 4: Repeat messages
+Example sequence:
+Client terminal:
+Message: How are you?
+Received from server: I am fine
+Message: exit
+Server terminal:
+Received: How are you?
+Message: I am fine
+Received: exit
+
+The loop continues until either client or server sends "exit".
+
+Step 5: Exit
+When the client receives "exit" from the server:
+done = True
+The loop stops.
+Client closes connection:
+client.close()
+
+Nothing is printed after that. The program ends.
